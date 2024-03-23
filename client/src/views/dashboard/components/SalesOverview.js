@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Select, MenuItem } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '../../../components/shared/DashboardCard';
@@ -9,9 +9,24 @@ const SalesOverview = () => {
 
     // select
     const [month, setMonth] = React.useState('1');
-
+    const [titelStatical,setTitelStatichcal]=useState('');
+    useEffect(()=>{
+        setTitelStatichcal('7 ngày gần nhât')
+        console.log('3123123');
+    },[titelStatical])
     const handleChange = (event) => {
-        setMonth(event.target.value);
+        const selectedValue = event.target.value;
+        if (selectedValue === '7day') {
+            setTitelStatichcal('7 ngày gần nhất');
+        } else if (selectedValue === '7week') {
+            setTitelStatichcal('7 tuần gần nhất');
+        } else if (selectedValue === '6month') {
+            setTitelStatichcal('6 tháng gần nhất');
+        } else if (selectedValue === 'lastweek') {
+            setTitelStatichcal('Tuần trước');
+        } else if (selectedValue === 'weeknow') {
+            setTitelStatichcal('Tuần này');
+        }
     };
 
     // chart color
@@ -95,17 +110,20 @@ const SalesOverview = () => {
 
     return (
 
-        <DashboardCard title="Biểu đồ sản phẩm 7 ngày gần nhất" action={
-            <Select
-                labelId="month-dd"
-                id="month-dd"
-                value={month}
-                size="small"
-                onChange={handleChange}
-            >
-                <MenuItem value={1}>7 ngày gấn nhất</MenuItem>
-                <MenuItem value={2}>7 tuần gần nhất</MenuItem>
-                <MenuItem value={3}>6 tháng gần nhất</MenuItem>
+        <DashboardCard title={`Biểu đồ sản phẩm ${titelStatical}`} action={
+                    <Select
+                        labelId="month-dd"
+                        id="month-dd"
+                        value={titelStatical} // Sử dụng giá trị của titelStatical thay vì month
+                        size="small"
+                        onChange={handleChange}
+                    >
+                    
+                <MenuItem value={`lastweek`} >Tuần trước</MenuItem>
+                <MenuItem value={`7week`}>7 tuần gần nhất</MenuItem>
+                <MenuItem value={`6month`}>6 tháng gần nhất</MenuItem>
+                <MenuItem value={`weeknow`} >Tuần này</MenuItem>
+                <MenuItem value={`7day`} >7 ngày gấn nhất</MenuItem>
             </Select>
         }>
             <Chart

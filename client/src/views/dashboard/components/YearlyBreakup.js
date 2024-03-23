@@ -9,9 +9,9 @@ import DashboardCard from '../../../components/shared/DashboardCard';
 const YearlyBreakup = () => {
   // chart color
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
-  const primarylight = '#ecf2ff';
-  const successlight = theme.palette.success.light;
+  const red = "#ff6c60";
+  const yellow = "#FCB322";
+  const blue = "#5D87FF";
 
   // chart
   const optionscolumnchart = {
@@ -24,7 +24,7 @@ const YearlyBreakup = () => {
       },
       height: 155,
     },
-    colors: [primary, primarylight, '#F9F9FD'],
+    colors: [red, yellow, blue],
     plotOptions: {
       pie: {
         startAngle: 0,
@@ -38,6 +38,12 @@ const YearlyBreakup = () => {
     tooltip: {
       theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
       fillSeriesColor: false,
+      y: {
+        // Định dạng dữ liệu hiển thị trong tooltip
+        formatter: function(value) {
+          return value + " sản phẩm";
+        }
+      }
     },
     stroke: {
       show: false,
@@ -62,44 +68,47 @@ const YearlyBreakup = () => {
   const seriescolumnchart = [38, 40, 25];
 
   return (
-    <DashboardCard title="Yearly Breakup">
+    <DashboardCard title="Biểu đồ tỉ lệ sản phẩm">
       <Grid container spacing={3}>
-        {/* column */}
         <Grid item xs={7} sm={7}>
           <Typography variant="h3" fontWeight="700">
-            $36,358
+            Tổng  :
           </Typography>
           <Stack direction="row" spacing={1} mt={1} alignItems="center">
-            <Avatar sx={{ bgcolor: successlight, width: 27, height: 27 }}>
-              <IconArrowUpLeft width={20} color="#39B69A" />
-            </Avatar>
             <Typography variant="subtitle2" fontWeight="600">
-              +9%
+              1000
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
-              last year
+              sản phẩm
             </Typography>
           </Stack>
           <Stack spacing={3} mt={5} direction="row">
             <Stack direction="row" spacing={1} alignItems="center">
               <Avatar
-                sx={{ width: 9, height: 9, bgcolor: primary, svg: { display: 'none' } }}
+                sx={{ width: 9, height: 9, bgcolor: red, svg: { display: 'none' } }}
               ></Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                2022
+              S1
               </Typography>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
               <Avatar
-                sx={{ width: 9, height: 9, bgcolor: primarylight, svg: { display: 'none' } }}
+                sx={{ width: 9, height: 9, bgcolor: yellow, svg: { display: 'none' } }}
               ></Avatar>
               <Typography variant="subtitle2" color="textSecondary">
-                2023
+              S2
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Avatar
+                sx={{ width: 9, height: 9, bgcolor: blue, svg: { display: 'none' } }}
+              ></Avatar>
+              <Typography variant="subtitle2" color="textSecondary">
+                S3
               </Typography>
             </Stack>
           </Stack>
         </Grid>
-        {/* column */}
         <Grid item xs={5} sm={5}>
           <Chart
             options={optionscolumnchart}

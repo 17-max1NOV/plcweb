@@ -12,6 +12,9 @@ const Dashboard = () => {
     <PageContainer title="Dashboard" description="this is Dashboard">
       <Box>
         <Grid container spacing={3}>
+        <Grid item xs={12} lg={12}>
+            <ListBox />
+          </Grid>
           <Grid item xs={12} lg={8}>
             <SalesOverview />
           </Grid>
@@ -25,9 +28,7 @@ const Dashboard = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} lg={12}>
-            <ListBox />
-          </Grid>
+     
           {/* <Grid item xs={12} lg={4}>
             <RecentTransactions />
           </Grid>
