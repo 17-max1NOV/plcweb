@@ -1,5 +1,8 @@
 const staffModel = require('../model/staffModel');
 const bcrypt = require('bcryptjs');
+require('dotenv').config()
+const jwt = require('jsonwebtoken');
+
 exports.getList = (req, res) => {
     try {
         const page = Number(req.query.page)||1;
@@ -43,6 +46,7 @@ exports.getList = (req, res) => {
         return res.json({ status: "fail", mess: "có lỗi xảy ra" });
     }
 }
+
 exports.createAcction = (req, res) => {
     try {
         const username = req.body.username;
@@ -144,4 +148,57 @@ exports.updateAcction = (req, res) => {
     } catch (error) {
         return res.json({ status: "fail", mess: "có lỗi xảy ra" });
     }
+}
+exports.login = (req, res) => {
+    try {
+        const username = req.body.username;
+        const password = req.body.password;
+        // Kiểm tra tên người dùng và xử lý kết quả
+        staffModel.checkUsername((error, results) => {
+            if (error) {
+                return res.status(500).json({ error: 'Database query error' });
+            }
+            if (results.length >0) {
+                bcrypt.compare(password, results[0].password, (err, isMatch) => {
+                    if (err) {
+                        return res.status(500).json({ error: 'Database query error' });
+                    }
+                    // Kiểm tra mật khẩu
+                    if (isMatch) {
+                        const accessToken = generateAccessToken({ id: results.id });
+                        const refreshToken = generateRefreshToken({ id: results.id });
+                        return res.json({
+                            status:"success",
+                            mess:"Đăng nhập thành công",
+                            accessToken: accessToken,
+                            refreshToken: refreshToken
+                        });
+                    } else {
+                        return res.json({ 
+                            status:"fail",
+                            mess:"Sai mật khẩu"
+                         });
+                    }
+                });
+            } else {
+                return res.json({ 
+                    status:"fail",
+                    mess:"Không tìm thấy tài khoản"
+                 });
+            }
+        }, username,null,true);
+    } catch (error) {
+        return res.json({ 
+            status:"fail",
+            mess:"Có lỗi xảy ra"
+         });
+    }
+}
+
+function generateAccessToken(user) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+}
+
+function generateRefreshToken(user) {
+    return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 }

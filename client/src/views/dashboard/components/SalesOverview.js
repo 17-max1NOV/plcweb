@@ -16,8 +16,8 @@ const SalesOverview = () => {
 
     // chart color
     const theme = useTheme();
-    const primary = theme.palette.primary.main;
-    const secondary = theme.palette.secondary.main;
+    // const primary =n;
+    // const secondary = theme.palette.secondary.main;
 
     // chart
     const optionscolumnchart = {
@@ -30,7 +30,7 @@ const SalesOverview = () => {
             },
             height: 370,
         },
-        colors: [primary, secondary],
+        colors: ["#ff6c60","#FCB322","#5D87FF"],
         plotOptions: {
             bar: {
                 horizontal: false,
@@ -79,13 +79,18 @@ const SalesOverview = () => {
     };
     const seriescolumnchart = [
         {
-            name: 'Eanings this month',
-            data: [355, 390, 300, 350, 390, 180, 355, 390],
-        },
-        {
-            name: 'Expense this month',
+            name: 'Màu đỏ',
             data: [280, 250, 325, 215, 250, 310, 280, 250],
         },
+       {
+            name: 'Màu vàng',
+            data: [280, 250, 325, 215, 250, 310, 280, 250],
+        },
+        {
+            name: 'Màu xanh',
+            data: [355, 390, 300, 350, 390, 180, 355, 390],
+        },
+
     ];
 
     return (

@@ -1,4 +1,5 @@
 const connection = require('../config/config');
+const jwt = require('jsonwebtoken');
 
 exports.createUser = (callback,data) => {
     connection.query('INSERT INTO tbl_user SET ?', data, (error, results) => {
@@ -21,7 +22,7 @@ exports.updateUser = (callback, data, id) => {
     });
 };
 
-exports.checkUsername = (callback, username, id = null) => {
+exports.checkUsername = (callback, username, id = null,count=false) => {
     let query = 'SELECT * FROM tbl_user WHERE username = ?';
     let queryParams = [username];
 
@@ -34,6 +35,9 @@ exports.checkUsername = (callback, username, id = null) => {
         if (error) {
             console.error('Lỗi truy vấn cơ sở dữ liệu: ' + error.stack);
             return callback(error, null);
+        }
+        if(count===true){
+            return callback(null, results);
         }
         if (results.length > 0) {
             return callback(null, true);
