@@ -95,7 +95,7 @@ const SalesOverview = () => {
 
     return (
 
-        <DashboardCard title="Sales Overview" action={
+        <DashboardCard title="Biểu đồ sản phẩm 7 ngày gần nhất" action={
             <Select
                 labelId="month-dd"
                 id="month-dd"
@@ -103,9 +103,9 @@ const SalesOverview = () => {
                 size="small"
                 onChange={handleChange}
             >
-                <MenuItem value={1}>March 2023</MenuItem>
-                <MenuItem value={2}>April 2023</MenuItem>
-                <MenuItem value={3}>May 2023</MenuItem>
+                <MenuItem value={1}>7 ngày gấn nhất</MenuItem>
+                <MenuItem value={2}>7 tuần gần nhất</MenuItem>
+                <MenuItem value={3}>6 tháng gần nhất</MenuItem>
             </Select>
         }>
             <Chart
